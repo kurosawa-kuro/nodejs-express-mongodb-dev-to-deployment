@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  web_node:
+    build:
+      context: .
+      dockerfile: ./docker/nodejs/Dockerfile
+    volumes:
+      - ./:/usr/src/app
+      - vol_nodejs:/usr/src/app/node_modules # Remove this if you have pure JS dependencies
+    ports:
+      - "5000:5000"
+    depends_on:
+    - db_mongo
+
+  db_mongo:
+    image: mongo
+    ports:
+    -  "27017:27017"
+    
+volumes:
+  vol_nodejs:
+    driver: local
